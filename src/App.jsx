@@ -3,6 +3,7 @@ import { NavBar, SearchBar, MoviesCount } from "./components/Header";
 import { tempMovieData, tempWatchedData } from "./App";
 import MoviesList from "./components/MoviesList";
 import { WatchedList, WatchedSummary } from "./components/WatchedList";
+import MovieDetails from "./components/MovieDetails";
 
 const KEY = "e00621ca";
 export default function App() {
@@ -11,6 +12,7 @@ export default function App() {
 	const [query, setQuery] = useState("");
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
+	const [selectedId, setSelectedId] = useState(null);
 
 	useEffect(() => {
 		const fetchMovies = async function () {
@@ -23,23 +25,27 @@ export default function App() {
 					throw new Error("Something went wrong while fetching movies!");
 
 				const data = await response.json();
-				if (!data.Response) throw new Error("Movie not found!");
+				// if (data.Response === "False") throw new Error("Movie not found!");
 
 				setMovies(data.Search);
 			} catch ({ message }) {
-				console.log(message);
+				setError(message);
 			} finally {
 				setLoading(false);
 			}
 
 			if (!query.length) {
 				setMovies([]);
+				setError(null);
 				return;
 			}
 		};
 
 		fetchMovies();
 	}, [query]);
+
+	const handleSelectedMovie = (id) =>
+		setSelectedId(selectedId === id ? null : id);
 
 	return (
 		<>
@@ -48,10 +54,25 @@ export default function App() {
 				<MoviesCount movies={movies} />
 			</NavBar>
 			<Main>
-				<Box>{loading ? <Loader /> : <MoviesList movies={movies} />}</Box>
 				<Box>
-					<WatchedSummary watched={tempWatchedData} />
-					<WatchedList watched={tempWatchedData} />
+					{loading && <Loader />}
+					{error && !loading && <ErrorMessage error={error} />}
+					{!loading && !error && (
+						<MoviesList movies={movies} setSelectedId={handleSelectedMovie} />
+					)}
+				</Box>
+				<Box>
+					{selectedId ? (
+						<MovieDetails
+							selectedId={selectedId}
+							setSelectedId={setSelectedId}
+						/>
+					) : (
+						<>
+							<WatchedSummary watched={tempWatchedData} />
+							<WatchedList watched={tempWatchedData} />
+						</>
+					)}
 				</Box>
 			</Main>
 		</>
@@ -63,7 +84,8 @@ function Main({ children }) {
 }
 
 function Box({ children }) {
-	const [open, setOpen] = useState(false);
+	const [open, setOpen] = useState(true);
+
 	return (
 		<div className="box">
 			<button className="btn-toggle" onClick={setOpen.bind(open, !open)}>
@@ -76,4 +98,8 @@ function Box({ children }) {
 
 function Loader() {
 	return <p className="loader">Loading...</p>;
+}
+
+function ErrorMessage({ error }) {
+	return <p className="error">{error}</p>;
 }
