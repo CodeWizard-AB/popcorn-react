@@ -50,8 +50,8 @@ body {
 }
 
 .box {
-	width: 42rem;
-	max-width: 42rem;
+	width: 44rem;
+	max-width: 44rem;
 	background-color: var(--color-background-500);
 	border-radius: 0.9rem;
 	overflow-y: scroll;
@@ -59,7 +59,8 @@ body {
 }
 
 ::-webkit-scrollbar {
-	width: 0px;
+	width: 5px;
+	background-color: white;
 }
 
 .loader {
@@ -142,7 +143,7 @@ body {
 .list {
 	list-style: none;
 	padding: 0.8rem 0;
-	overflow: scroll;
+	/* overflow: scroll;	 */
 }
 
 .list-watched {
@@ -178,6 +179,7 @@ body {
 
 .list h3 {
 	font-size: 1.8rem;
+	font-weight: 400;
 }
 
 .list div {
@@ -225,6 +227,7 @@ body {
 	text-transform: uppercase;
 	font-size: 1.6rem;
 	margin-bottom: 0.6rem;
+	font-weight: 400;
 }
 
 .summary div {

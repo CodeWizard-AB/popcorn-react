@@ -21,8 +21,10 @@ function SearchBar({ query, setQuery }) {
 	);
 }
 
-function MoviesCount({ movies = 0 }) {
-	return <p className="num-results">Found {movies.length} movies</p>;
+function MoviesCount({ movies }) {
+	return (
+		<p className="num-results">Found {movies ? movies.length : 0} movies</p>
+	);
 }
 
 export { MoviesCount, NavBar, SearchBar };
