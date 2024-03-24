@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { NavBar, SearchBar, MoviesCount } from "./components/Header";
-import { useEffect } from "react";
+import { tempMovieData, tempWatchedData } from "./App";
 const KEY = "e00621ca";
 
 export default function App() {
@@ -13,6 +13,7 @@ export default function App() {
 					`http://www.omdbapi.com/?apikey=${KEY}&s=${query}`
 				);
 				if (!response.Response) throw new Error("Movie not found 😕");
+
 				const data = await response.json();
 				console.log(data);
 			} catch ({ message }) {
@@ -29,6 +30,20 @@ export default function App() {
 				<SearchBar query={query} setQuery={setQuery} />
 				<MoviesCount movies={movies} />
 			</NavBar>
+			<Main>
+				<Box>
+					
+				</Box>
+				<Box></Box>
+			</Main>
 		</>
 	);
+}
+
+function Main({ children }) {
+	return <main className="main">{children}</main>;
+}
+
+function Box() {
+	return <div className="box"></div>;
 }
