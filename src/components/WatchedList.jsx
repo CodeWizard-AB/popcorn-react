@@ -1,8 +1,12 @@
-function WatchedList({ watched }) {
+function WatchedList({ watched, handleDeletion }) {
 	return (
 		<ul className="list">
 			{watched.map((movie, i) => (
-				<Watched key={i} movie={movie} />
+				<Watched
+					key={i}
+					movie={movie}
+					handleDeletion={handleDeletion.bind(null, movie)}
+				/>
 			))}
 		</ul>
 	);
@@ -16,6 +20,7 @@ function WatchedSummary({ watched }) {
 	const userRating = 0;
 	const runtime = Math.round(average("Runtime"));
 
+	console.log(watched);
 	return (
 		<div className="summary">
 			<h2>MOVIES YOU WATCHED</h2>
@@ -46,11 +51,11 @@ function WatchedSummary({ watched }) {
 	);
 }
 
-function Watched({ movie }) {
+function Watched({ movie, handleDeletion }) {
 	return (
 		<li>
-			<img src={movie.poster} alt={movie.title} />
-			<h3>{movie.title}</h3>
+			<img src={movie.Poster} alt={movie.Title} />
+			<h3>{movie.Title}</h3>
 			<div>
 				<p>
 					<span>⭐️</span>
@@ -64,10 +69,12 @@ function Watched({ movie }) {
 
 				<p>
 					<span>⏳</span>
-					<span>{movie.runtime}</span>
+					<span>{movie.Runtime}</span>
 					<span>min</span>
 				</p>
-				<button className="btn-delete">x</button>
+				<button className="btn-delete" onClick={handleDeletion}>
+					x
+				</button>
 			</div>
 		</li>
 	);

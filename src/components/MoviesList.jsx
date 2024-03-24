@@ -9,7 +9,7 @@ export default function MoviesList({ setSelectedId, movies }) {
 	);
 }
 
-function Movie({ movie, setSelectedId}) {
+function Movie({ movie, setSelectedId }) {
 	return (
 		<li onClick={setSelectedId.bind(null, movie.imdbID)}>
 			<img src={movie.Poster} alt={movie.Title} />

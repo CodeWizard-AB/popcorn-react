@@ -23,6 +23,7 @@ export default function MovieDetails({
 		imdbRating,
 		Title,
 		Genre,
+		imdbID,
 	} = selectedMovie;
 
 	useEffect(() => {
@@ -44,10 +45,16 @@ export default function MovieDetails({
 
 	const handleAddMovie = function () {
 		const newMovie = {
-			Runtime,
-			imdbRating,
+			Runtime: +parseInt(Runtime),
+			Title,
+			Poster,
+			imdbRating: +imdbRating,
+			imdbID,
 		};
-		setWatched([...watched, newMovie]);
+		if (watched.every((movie) => movie.imdbID !== imdbID)) {
+			setWatched([...watched, newMovie]);
+			setSelectedId(null)
+		}
 	};
 
 	return (
@@ -75,7 +82,9 @@ export default function MovieDetails({
 					</header>
 					<section>
 						<div className="rating">
-							<button className="btn-add" onClick={handleAddMovie}>+ Add to list</button>
+							<button className="btn-add" onClick={handleAddMovie}>
+								+ Add to list
+							</button>
 						</div>
 						<p>
 							<em>{Plot}</em>

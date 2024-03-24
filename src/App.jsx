@@ -43,8 +43,14 @@ export default function App() {
 		fetchMovies();
 	}, [query]);
 
-	const handleSelectedMovie = (id) =>
+	const handleSelectedMovie = function (id) {
 		setSelectedId(selectedId === id ? null : id);
+	};
+	const handleDeletion = function (movie) {
+		setWatched((watchedMovies) =>
+			watchedMovies.filter((watched) => watched.imdbID !== movie.imdbID)
+		);
+	};
 
 	return (
 		<>
@@ -71,7 +77,7 @@ export default function App() {
 					) : (
 						<>
 							<WatchedSummary watched={watched} />
-							<WatchedList watched={watched} />
+							<WatchedList watched={watched} handleDeletion={handleDeletion} />
 						</>
 					)}
 				</Box>
