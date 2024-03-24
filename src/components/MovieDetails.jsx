@@ -43,6 +43,11 @@ export default function MovieDetails({
 		fetchSelected();
 	}, [selectedId]);
 
+	useEffect(() => {
+		document.title = Title;
+		return () => (document.title = "usePopCorn");
+	}, [Title]);
+
 	const handleAddMovie = function () {
 		const newMovie = {
 			Runtime: +parseInt(Runtime),
@@ -53,7 +58,7 @@ export default function MovieDetails({
 		};
 		if (watched.every((movie) => movie.imdbID !== imdbID)) {
 			setWatched([...watched, newMovie]);
-			setSelectedId(null)
+			setSelectedId(null);
 		}
 	};
 
