@@ -12,7 +12,8 @@ function WatchedSummary({ watched }) {
 	const average = (type, arr = watched) =>
 		arr.reduce((total, movie) => total + movie[type], 0) || 0;
 	const imdbRating = average("imdbRating").toFixed(2);
-	const useRating = average("userRating").toFixed(2);
+	// const useRating = average("userRating").toFixed(2);
+	const userRating = 0;
 	const runtime = Math.round(average("Runtime"));
 
 	return (
@@ -32,7 +33,7 @@ function WatchedSummary({ watched }) {
 
 				<p>
 					<span>🌟</span>
-					<span>{useRating}</span>
+					<span>{userRating}</span>
 				</p>
 
 				<p>

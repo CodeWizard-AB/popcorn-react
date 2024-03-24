@@ -5,7 +5,12 @@ function Loader() {
 }
 
 const KEY = "e00621ca";
-export default function MovieDetails({ selectedId, setSelectedId }) {
+export default function MovieDetails({
+	selectedId,
+	setSelectedId,
+	watched,
+	setWatched,
+}) {
 	const [loading, setLoading] = useState(false);
 	const [selectedMovie, setSelectedMovie] = useState({});
 	const {
@@ -16,7 +21,6 @@ export default function MovieDetails({ selectedId, setSelectedId }) {
 		Plot,
 		Released,
 		imdbRating,
-		Year,
 		Title,
 		Genre,
 	} = selectedMovie;
@@ -29,7 +33,6 @@ export default function MovieDetails({ selectedId, setSelectedId }) {
 					`http://www.omdbapi.com/?apikey=${KEY}&i=${selectedId}`
 				);
 				const data = await response.json();
-				console.log(data);
 				setSelectedMovie(data);
 			} finally {
 				setLoading(false);
@@ -38,6 +41,14 @@ export default function MovieDetails({ selectedId, setSelectedId }) {
 
 		fetchSelected();
 	}, [selectedId]);
+
+	const handleAddMovie = function () {
+		const newMovie = {
+			Runtime,
+			imdbRating,
+		};
+		setWatched([...watched, newMovie]);
+	};
 
 	return (
 		<div className="details">
@@ -63,7 +74,9 @@ export default function MovieDetails({ selectedId, setSelectedId }) {
 						</div>
 					</header>
 					<section>
-						<div className="rating"></div>
+						<div className="rating">
+							<button className="btn-add" onClick={handleAddMovie}>+ Add to list</button>
+						</div>
 						<p>
 							<em>{Plot}</em>
 						</p>

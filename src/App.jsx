@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { NavBar, SearchBar, MoviesCount } from "./components/Header";
-import { tempMovieData, tempWatchedData } from "./App";
 import MoviesList from "./components/MoviesList";
 import { WatchedList, WatchedSummary } from "./components/WatchedList";
 import MovieDetails from "./components/MovieDetails";
@@ -66,11 +65,13 @@ export default function App() {
 						<MovieDetails
 							selectedId={selectedId}
 							setSelectedId={setSelectedId}
+							watched={watched}
+							setWatched={setWatched}
 						/>
 					) : (
 						<>
-							<WatchedSummary watched={tempWatchedData} />
-							<WatchedList watched={tempWatchedData} />
+							<WatchedSummary watched={watched} />
+							<WatchedList watched={watched} />
 						</>
 					)}
 				</Box>
