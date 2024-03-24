@@ -65,6 +65,9 @@ export default function MovieDetails({
 		}
 	};
 
+	const isWatched = watched.some((movie) => movie.imdbID === selectedId);
+	const isWatchedRate = watched.find((_) => isWatched)?.userRating;
+
 	return (
 		<div className="details">
 			<button
@@ -90,11 +93,16 @@ export default function MovieDetails({
 					</header>
 					<section>
 						<div className="rating">
-							<Rating maxLength={10} onSetRating={setRating} />
-
-							<button className="btn-add" onClick={handleAddMovie}>
-								+ Add to list
-							</button>
+							{isWatched ? (
+								<p>The movie was rated with {isWatchedRate} stars</p>
+							) : (
+								<Rating maxLength={10} onSetRating={setRating} />
+							)}
+							{rating > 0 && (
+								<button className="btn-add" onClick={handleAddMovie}>
+									+ Add to list
+								</button>
+							)}
 						</div>
 						<p>
 							<em>{Plot}</em>
