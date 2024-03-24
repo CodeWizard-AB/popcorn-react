@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Rating from "./Rating";
 
 function Loader() {
 	return <p className="loader">Loading...</p>;
@@ -13,6 +14,7 @@ export default function MovieDetails({
 }) {
 	const [loading, setLoading] = useState(false);
 	const [selectedMovie, setSelectedMovie] = useState({});
+	const [rating, setRating] = useState(0);
 	const {
 		Actors,
 		Director,
@@ -50,11 +52,12 @@ export default function MovieDetails({
 
 	const handleAddMovie = function () {
 		const newMovie = {
-			Runtime: +parseInt(Runtime),
 			Title,
-			Poster,
-			imdbRating: +imdbRating,
 			imdbID,
+			Poster,
+			Runtime: +parseInt(Runtime),
+			userRating: rating,
+			imdbRating: +imdbRating,
 		};
 		if (watched.every((movie) => movie.imdbID !== imdbID)) {
 			setWatched([...watched, newMovie]);
@@ -87,6 +90,8 @@ export default function MovieDetails({
 					</header>
 					<section>
 						<div className="rating">
+							<Rating maxLength={10} onSetRating={setRating} />
+
 							<button className="btn-add" onClick={handleAddMovie}>
 								+ Add to list
 							</button>

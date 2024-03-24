@@ -346,6 +346,23 @@ body {
 	justify-content: center;
 }
 
+.rating-container {
+	display: flex;
+	align-items: center;
+}
+
+.stars ion-icon {
+	font-size: 2rem;
+	margin-right: 0.6rem;
+	color: orange;
+}
+
+.rating-count {
+	font-size: 2rem;
+	margin-top: -6px;
+	margin-left: 1rem;
+}
+
 /*
 SPACING SYSTEM (px)
 2 / 4 / 8 / 12 / 16 / 24 / 32 / 40 / 48 / 64 / 80 / 96 / 128
